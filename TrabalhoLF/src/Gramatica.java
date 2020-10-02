@@ -6,6 +6,7 @@ public class Gramatica {
 	public Map<String, String> gramatica = new HashMap<>();
 	
 	public Gramatica() {
+		
 	}
 
 	public Map<String, String> getGramatica() {
@@ -14,6 +15,10 @@ public class Gramatica {
 
 	public void setGramatica(String key, String value) {
 		gramatica.put(key, value);
+	}
+	
+	public int getSize() {
+		return this.gramatica.size();
 	}
 	
 }
