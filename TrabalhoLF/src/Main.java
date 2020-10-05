@@ -1,4 +1,6 @@
 import java.util.Map;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 
@@ -7,34 +9,39 @@ public class Main {
 	public static void main(String[] args) 
 	{
 		Scanner input = new Scanner(System.in);
-		Gramatica map = new Gramatica();
+		Gramatica gra1 = new Gramatica(1);
+		Gramatica gra2 = new Gramatica(2);
+		Gramatica gra3 = new Gramatica(3);
 		Derivacao der = new Derivacao();
-		boolean continuarInformando = true;
 		
-		while(continuarInformando)
+		System.out.println("Qual gramatica você deseja derivar?\n");
+		
+		gra1.imprimirOpcoes();
+		gra2.imprimirOpcoes();
+		gra3.imprimirOpcoes();
+		
+		System.out.println("\nGramatica escolhido: ");
+		int opcaoEscolhida = input.nextInt();
+		
+		switch(opcaoEscolhida)
 		{
-			System.out.println("\nInforma a gramatica: ");
-			String gr = input.next();
-			
-			map.setGramatica(gr.split("\\=")[0], gr.split("\\=")[1]);
-			
-			System.out.println("\nDeseja informar mais uma gramatica?\n1 - Sim\n2 - Não\n\nOpção escolhida: ");
-			if(input.nextInt() != 1) 
-			{
-				continuarInformando = false;
-			}
+			case 1: der.derivarMap(gra1.gramatica); break;
+			case 2: der.derivarMap(gra2.gramatica); break;
+			case 3: der.derivarMap(gra3.gramatica); break;
 		}
-			
-		int quantidadeElementos = 1;
-		System.out.println("\nQual gramatica você deseja derivar?");
-		for (Map.Entry<String, String> entry : map.gramatica.entrySet()) {
-			String key = entry.getKey();
-			System.out.println(quantidadeElementos + " - " + key);
-			quantidadeElementos++;
-		}
-		System.out.println("Elemento escolhido: ");
-		String keyEscolhida = input.next();
 		
-		der.derivarMap(keyEscolhida, map.gramatica);
+		int quantidadeElementos = der.pilhaFinal.size();
+		ArrayList<Character> derivacaoFinal = new ArrayList<>(); 
+		
+		System.out.print("\nGramatica derivada: ");
+		for (int i=0; i < quantidadeElementos; i++)
+		{
+			derivacaoFinal.add(der.pilhaFinal.pop());
+		}
+		
+		for (int i=derivacaoFinal.size()-1; i >= 0 ; i--)
+		{
+			System.out.print(derivacaoFinal.get(i));
+		}
 	}
 }
